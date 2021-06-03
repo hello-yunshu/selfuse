@@ -1,0 +1,10 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+board=$(cat /tmp/sysinfo/board_name | cut -d , -f2)
+if [[ ! -f /etc/yunshu_${board} ]]; then
+    touch /etc/yunshu_${board}
+    bash /etc/yunshu.sh
+fi
+
+exit 0
