@@ -139,7 +139,7 @@ rule-providers:
   自用直连:
     type: http
     behavior: domain
-    path: "./rule_provider/自用直连"
+    path: "./rule_provider/cn-self"
     format: text
     url: https://cdn.jsdelivr.net/gh/hello-yunshu/selfuse@master/cn.list
     interval: 86400
@@ -147,7 +147,7 @@ rule-providers:
   自用GFW:
     type: http
     behavior: domain
-    path: "./rule_provider/自用GFW"
+    path: "./rule_provider/GFW-self"
     format: text
     url: https://cdn.jsdelivr.net/gh/hello-yunshu/selfuse@master/gfw.list
     interval: 86400
