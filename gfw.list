@@ -46,15 +46,14 @@ pilipili.club
 pilipiliultra.com
 emby-mica-us-v1.mius.uk
 emby-mica-hk3-v4.mius.uk
-onlyfans.com
-tanhuatv.site
 chilledmelon.com
 kelee.one
-
 pump.fun
-dns.google
-doh.opendns.com
-cloudflare-dns.com
+
+#dns
+# dns.google
+# doh.opendns.com
+# cloudflare-dns.com
 
 #ai
 hf-mirror.com
