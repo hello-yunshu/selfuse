@@ -114,10 +114,10 @@ rule-providers:
   AWAvenue-Ads:
     type: http
     behavior: domain
-    format: yaml
+    format: mrs
     # path可为空(仅限clash.meta 1.15.0以上版本)
-    path: ./rule_provider/AWAvenue-Ads.yaml
-    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"
+    path: ./rule_provider/AWAvenue-Ads.mrs
+    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash.mrs"
     interval: 43200
 
   heidai-Ads:
@@ -131,9 +131,9 @@ rule-providers:
   anti-ad:
     type: http
     behavior: domain
-    format: yaml
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
-    path: ./rule_provider/anti-ad.yaml
+    format: mrs
+    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-ad.github.io/refs/heads/master/docs/mihomo.mrs"
+    path: ./rule_provider/anti-ad.mrs
     interval: 43200
 
   Cats-Team-adrules:
@@ -155,8 +155,9 @@ rule-providers:
   Loyalsoldier-Ads:
     type: http
     behavior: domain
+    format: text
     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
-    path: ./rule_provider/Loyalsoldier-Ads.yaml
+    path: ./rule_provider/Loyalsoldier-Ads.txt
     interval: 86400
 
   # reject_non_ip_no_drop:
@@ -309,16 +310,28 @@ dns:
     - '+.lan'
     - '+.local'
   default-nameserver:
-    - '127.0.0.1:953'
+    - 223.5.5.5
+    - 119.29.29.29
   nameserver:
     - '127.0.0.1:953'
   proxy-server-nameserver:
     - 1.1.1.1
-    - 1.0.0.1
     - 208.67.222.222
+  nameserver-policy:
+    "geosite:cn,private,apple,microsoft":
+      - '127.0.0.1:953'  # 国内优先使用本地 DNS 解析
+    "geosite:gfw":
+      - 'https://1.1.1.1/dns-query'   # Cloudflare DoH
+#      - 'https://1.0.0.1/dns-query'  # 备用
+      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 安全快速       
+#      - 'https://dns.google/dns-query'       # Google DoH - 备选
+    "geosite:!cn":
+      - 1.1.1.1
+#      - 1.0.0.1  # 备用
+      - 208.67.222.222
   fallback:
     - 'tls://1.1.1.1'          # Cloudflare over TLS - 国外稳定
-    - 'tls://1.0.0.1'
+#    - 'tls://1.0.0.1'         # 备用
     - 'tls://208.67.222.222'   # OpenDNS over TLS - 国外稳定
   fallback-filter:
     geoip: true
@@ -328,20 +341,13 @@ dns:
     ipcidr:
       - 240.0.0.0/4
     domain:
-      - '+.apple.com'
-      - '+.microsoft.com'
+#      - '+.apple.com'
+#      - '+.microsoft.com'
       - '+.google.com'
-      - '+.facebook.com'
+      - '+.x.com'
+      - '+.twitter.com'
       - '+.youtube.com'
-  nameserver-policy:
-    "geosite:cn,private":
-      - '127.0.0.1:953'  # 国内优先使用本地 DNS 解析
-    "geosite:!cn,!private":
-      - 'https://1.1.1.1/dns-query'   # Cloudflare DoH
-      - 'https://1.0.0.1/dns-query'
-      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 安全快速       
-      - 'https://dns.google/dns-query'       # Google DoH - 备选
-
+      
 # 多入站端口设置
 # listeners:
 #   - name: hk
