@@ -326,11 +326,9 @@ dns:
       - 'https://dns.google/dns-query'       # Google DoH - 备选
     "geosite:!cn":
       - 1.1.1.1
-#      - 1.0.0.1  # 备用
       - 8.8.8.8
   fallback:
     - 'tls://1.1.1.1'          # Cloudflare over TLS - 国外稳定
-#    - 'tls://1.0.0.1'         # 备用
     - 'tls://8.8.8.8'          # 谷歌 dot
   fallback-filter:
     geoip: true
@@ -510,6 +508,8 @@ rules:
   - GEOSITE,steam,Steam
   - GEOSITE,onedrive,OneDrive
   - GEOSITE,microsoft,微软服务
+  - IP-CIDR,8.8.8.8/32,DIRECT,no-resolve
+  - IP-CIDR,8.8.4.4/32,DIRECT,no-resolve
   - GEOIP,google,Google
   - GEOIP,netflix,NETFLIX
   - GEOIP,telegram,Telegram
