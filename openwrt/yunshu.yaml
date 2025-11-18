@@ -313,11 +313,13 @@ dns:
   nameserver:
     - '127.0.0.1:953'
   proxy-server-nameserver:
-    - 208.67.220.220
+    - 1.1.1.1
+    - 1.0.0.1
     - 208.67.222.222
   fallback:
-    - 'tls://208.67.222.222'   # OpenDNS over TLS - 国外稳定
     - 'tls://1.1.1.1'          # Cloudflare over TLS - 国外稳定
+    - 'tls://1.0.0.1'
+    - 'tls://208.67.222.222'   # OpenDNS over TLS - 国外稳定
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -334,9 +336,10 @@ dns:
   nameserver-policy:
     "geosite:cn,private":
       - '127.0.0.1:953'  # 国内优先使用本地 DNS 解析
-    "geosite:!cn,!private": 
-      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 安全快速
-      - 'https://cloudflare-dns.com/dns-query'         # Cloudflare DoH - 速度快
+    "geosite:!cn,!private":
+      - 'https://1.1.1.1/dns-query'   # Cloudflare DoH
+      - 'https://1.0.0.1/dns-query'
+      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 安全快速       
       - 'https://dns.google/dns-query'       # Google DoH - 备选
 
 # 多入站端口设置
