@@ -497,8 +497,6 @@ rules:
   - IP-CIDR6,fe80::/10,DIRECT,no-resolve
 
   - RULE-SET,自用直连,DIRECT
-  - IP-CIDR,8.8.8.8/32,DIRECT,no-resolve
-  - IP-CIDR,8.8.4.4/32,DIRECT,no-resolve
   - GEOSITE,steam@cn,国内
   - GEOSITE,apple-cn,国内
   - GEOSITE,CN,国内
