@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.24-251102
+# 版本 V1.28-251119
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -220,6 +220,14 @@ rule-providers:
     url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/gfw.list
     interval: 7200
 
+  自用海外DNS:
+    type: http
+    behavior: classical
+    path: "./rule_provider/overseas-dns-self.txt"
+    format: text
+    url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/overseas-dns.list
+    interval: 7200
+
 mode: rule
 # ipv6 支持
 ipv6: true
@@ -260,7 +268,7 @@ find-process-mode: strict
 keep-alive-interval: 1800
 
 # 全局客户端指纹
-global-client-fingerprint: random # 随机指纹
+global-client-fingerprint: chrome # 随机指纹
 
 # 缓存
 profile:
@@ -328,8 +336,9 @@ dns:
       - 1.1.1.1
       - 8.8.8.8
   fallback:
-    - 'tls://1.1.1.1'          # Cloudflare over TLS - 国外稳定
-    - 'tls://8.8.8.8'          # 谷歌 dot
+    - 'https://cloudflare-dns.com/dns-query'   # Cloudflare DoH
+#      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
+    - 'https://dns.google/dns-query'       # Google DoH - 备选
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -374,12 +383,17 @@ proxy-groups:
       proxies:
         [自建节点, 低倍率, 全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
     }
-  # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
-  - { name: dns, 
+  - { name: 海外dns, 
       type: select,
       proxies:
-        [DIRECT, 自建节点, 节点选择, 自动选择, 低倍率, 香港, 台湾],
+        [自建节点, 节点选择, 香港, 台湾, 日本, 新加坡, 自动选择, 低倍率, DIRECT],
     }
+    # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
+  # - { name: dns, 
+  #     type: select,
+  #     proxies:
+  #       [DIRECT, 自建节点, 节点选择, 自动选择, 低倍率, 香港, 台湾],
+  #   }
   # WARP 配置链式出站
   # - { name: WARP前置, <<: *pr, exclude-type: "wireguard" }
   # 自建节点
@@ -501,6 +515,7 @@ rules:
   - GEOSITE,apple-cn,国内
   - GEOSITE,CN,国内
   - GEOIP,CN,国内
+  - RULE-SET,自用海外DNS,海外dns
   - RULE-SET,自用GFW,节点选择
 # - GEOSITE,biliintl,哔哩东南亚
 # - GEOSITE,bilibili,哔哩哔哩
