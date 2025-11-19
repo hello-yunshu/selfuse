@@ -7,9 +7,13 @@ IP-CIDR,5.28.195.1/32
 DOMAIN-SUFFIX,openwrt.org
 DOMAIN-SUFFIX,idrlabs.com
 DOMAIN-SUFFIX,pixiv.net
+DOMAIN-SUFFIX,pixiv.org
 DOMAIN-SUFFIX,picrew.me
 DOMAIN-SUFFIX,exhentai.org
 DOMAIN-SUFFIX,e-hentai.org
+DOMAIN-SUFFIX,boylove.cc
+DOMAIN-SUFFIX,hentaifox.com
+DOMAIN-SUFFIX,se8.us
 
 # 代码
 DOMAIN-SUFFIX,docker.com
