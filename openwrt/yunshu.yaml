@@ -297,7 +297,7 @@ sniffer:
 # tun 模式
 tun:
   enable: true # enable 'true'
-  stack: system  # or 'gvisor'
+  stack: mixed # or 'system'  # or 'gvisor'
   dns-hijack:
     - "any:53"
     - "tcp://any:53"
