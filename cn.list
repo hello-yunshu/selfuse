@@ -50,7 +50,7 @@ DOMAIN-SUFFIX,galaxyappstore.com
 
 # CDN/静态资源
 DOMAIN-SUFFIX,speed.cloudflare.com
-DOMAIN-SUFFIX,gstatic.com
+DOMAIN-SUFFIX,fonts.gstatic.com
 
 # 系统服务
 DOMAIN-SUFFIX,time.windows.com
