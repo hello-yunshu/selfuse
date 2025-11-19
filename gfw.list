@@ -68,3 +68,6 @@ DOMAIN-SUFFIX,lmstudio.ai
 DOMAIN-SUFFIX,groq.com
 DOMAIN-SUFFIX,cursor.com
 DOMAIN-SUFFIX,flowith.io
+
+# cdn
+DOMAIN-SUFFIX,cdn.ghostery.com
