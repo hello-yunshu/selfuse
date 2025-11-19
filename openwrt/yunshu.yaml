@@ -386,7 +386,7 @@ proxy-groups:
   - { name: 海外dns, 
       type: select,
       proxies:
-        [自建节点, 节点选择, 香港, 台湾, 日本, 新加坡, 自动选择, 低倍率, DIRECT],
+        [自动选择, 自建节点, 节点选择, 香港, 台湾, 日本, 新加坡, 自动选择, 低倍率, DIRECT],
     }
     # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
   # - { name: dns, 
