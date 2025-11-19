@@ -1,62 +1,66 @@
-openwrt.org
-idrlabs.com
-pixiv.net
-picrew.me
-exhentai.org
-e-hentai.org
+# IP地址
+# telegram
+IP-CIDR,5.28.195.1/32
 
-#代码
-docker.com
-docker.io
-github.com
-github.global.ssl.fastly.net
-assets-cdn.github.com
-github.io
-github.githubassets.com
-githubusercontent.com
-gitlab.com
-gitlab.io
-gitlabusercontent.com
-gitlabusercontent.io
+# 域名
+# general
+DOMAIN-SUFFIX,openwrt.org
+DOMAIN-SUFFIX,idrlabs.com
+DOMAIN-SUFFIX,pixiv.net
+DOMAIN-SUFFIX,picrew.me
+DOMAIN-SUFFIX,exhentai.org
+DOMAIN-SUFFIX,e-hentai.org
 
+# 代码
+DOMAIN-SUFFIX,docker.com
+DOMAIN-SUFFIX,docker.io
+DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,github.global.ssl.fastly.net
+DOMAIN-SUFFIX,assets-cdn.github.com
+DOMAIN-SUFFIX,github.io
+DOMAIN-SUFFIX,github.githubassets.com
+DOMAIN-SUFFIX,githubusercontent.com
+DOMAIN-SUFFIX,gitlab.com
+DOMAIN-SUFFIX,gitlab.io
+DOMAIN-SUFFIX,gitlabusercontent.com
+DOMAIN-SUFFIX,gitlabusercontent.io
 
-t.me
-agemys.org
-archive.org
-whatsapp.net
-whatsapp.com
-youtube
-youtube.com
-youtu.be
-googlevideo.com
-cloud.google.com
-ytimg.com
-gvt2.com
-hellosimply.com
-bitcomet.com
-websim.com
-yxwwyx.co
-yxwwyx.com
+# 社交媒体
+DOMAIN-SUFFIX,t.me
+DOMAIN-SUFFIX,whatsapp.net
+DOMAIN-SUFFIX,whatsapp.com
 
-#emby
-docker.xiaoya.pro
-misakaf.org
-z-lib.gs
-pilipili.club
-pilipiliultra.com
-chilledmelon.com
-kelee.one
-pump.fun
+# 视频
+DOMAIN-SUFFIX,youtube.com
+DOMAIN-SUFFIX,youtu.be
+DOMAIN-SUFFIX,googlevideo.com
+DOMAIN-SUFFIX,ytimg.com
+DOMAIN-SUFFIX,gvt2.com
 
-#dns
-# dns.google
-# doh.opendns.com
-# cloudflare-dns.com
+# 工具
+DOMAIN-SUFFIX,archive.org
+DOMAIN-SUFFIX,agemys.org
+DOMAIN-SUFFIX,cloud.google.com
+DOMAIN-SUFFIX,hellosimply.com
+DOMAIN-SUFFIX,bitcomet.com
+DOMAIN-SUFFIX,websim.com
+DOMAIN-SUFFIX,yxwwyx.co
+DOMAIN-SUFFIX,yxwwyx.com
 
-#ai
-hf-mirror.com
-huggingface.co
-lmstudio.ai
-groq.com
-cursor.com
-flowith.io
+# emby
+DOMAIN-SUFFIX,docker.xiaoya.pro
+DOMAIN-SUFFIX,misakaf.org
+DOMAIN-SUFFIX,z-lib.gs
+DOMAIN-SUFFIX,pilipili.club
+DOMAIN-SUFFIX,pilipiliultra.com
+DOMAIN-SUFFIX,chilledmelon.com
+DOMAIN-SUFFIX,kelee.one
+DOMAIN-SUFFIX,pump.fun
+
+# ai
+DOMAIN-SUFFIX,hf-mirror.com
+DOMAIN-SUFFIX,huggingface.co
+DOMAIN-SUFFIX,lmstudio.ai
+DOMAIN-SUFFIX,groq.com
+DOMAIN-SUFFIX,cursor.com
+DOMAIN-SUFFIX,flowith.io

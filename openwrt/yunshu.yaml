@@ -155,9 +155,9 @@ rule-providers:
   Loyalsoldier-Ads:
     type: http
     behavior: domain
-    format: text
+    format: yaml
     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
-    path: ./rule_provider/Loyalsoldier-Ads.txt
+    path: ./rule_provider/Loyalsoldier-Ads.yaml
     interval: 86400
 
   # reject_non_ip_no_drop:
@@ -206,19 +206,19 @@ rule-providers:
 
   自用直连:
     type: http
-    behavior: domain
-    path: "./rule_provider/cn-self"
+    behavior: classical
+    path: "./rule_provider/cn-self.txt"
     format: text
-    url: https://cdn.jsdelivr.net/gh/hello-yunshu/selfuse@master/cn.list
-    interval: 86400
+    url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/cn.list
+    interval: 7200
 
   自用GFW:
     type: http
-    behavior: domain
-    path: "./rule_provider/GFW-self"
+    behavior: classical
+    path: "./rule_provider/GFW-self.txt"
     format: text
-    url: https://cdn.jsdelivr.net/gh/hello-yunshu/selfuse@master/gfw.list
-    interval: 86400
+    url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/gfw.list
+    interval: 7200
 
 mode: rule
 # ipv6 支持

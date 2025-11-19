@@ -1,30 +1,60 @@
-#DoT/DoH
-dns.alidns.com
-doh.pub
-dot.pub
-doh.360.cn
-dot.360.cn
+# IP地址
+# DNS服务
+IP-CIDR,8.8.8.8/32
+IP-CIDR,8.8.4.4/32
+IP-CIDR,1.1.1.1/32
+IP-CIDR,1.0.0.1/32
+IP-CIDR,208.67.222.222/32
+IP-CIDR,208.67.220.220/32
 
-teamviewer.com
-epicgames.com
-dangdang.com
-account.synology.com
-ddns.synology.com
-checkip.synology.com
-checkip.dyndns.org
-checkipv6.synology.com
-ntp.aliyun.com
-cn.ntp.org.cn
-ntp.ntsc.ac.cn
-cdn-apple.com
+# 域名
+# DNS服务
+DOMAIN-SUFFIX,dns.alidns.com
+DOMAIN-SUFFIX,doh.pub
+DOMAIN-SUFFIX,dot.pub
+DOMAIN-SUFFIX,doh.360.cn
+DOMAIN-SUFFIX,dot.360.cn
+DOMAIN-SUFFIX,dns.google
+DOMAIN-SUFFIX,doh.opendns.com
+DOMAIN-SUFFIX,cloudflare-dns.com
 
-test-ipv6.com
-galaxyappstore.com
-speed.cloudflare.com
-time.windows.com
-gstatic.com
+# 远程控制
+DOMAIN-SUFFIX,teamviewer.com
 
-readoor.cn
+# 游戏平台
+DOMAIN-SUFFIX,epicgames.com
 
-#游戏
-erk8.com
+# 电商
+DOMAIN-SUFFIX,dangdang.com
+
+# 网络存储/服务
+DOMAIN-SUFFIX,account.synology.com
+DOMAIN-SUFFIX,ddns.synology.com
+DOMAIN-SUFFIX,checkip.synology.com
+DOMAIN-SUFFIX,checkip.dyndns.org
+DOMAIN-SUFFIX,checkipv6.synology.com
+
+# 时间同步
+DOMAIN-SUFFIX,ntp.aliyun.com
+DOMAIN-SUFFIX,cn.ntp.org.cn
+DOMAIN-SUFFIX,ntp.ntsc.ac.cn
+
+# 苹果服务
+DOMAIN-SUFFIX,cdn-apple.com
+
+# 网络检测工具
+DOMAIN-SUFFIX,test-ipv6.com
+
+# 应用商店
+DOMAIN-SUFFIX,galaxyappstore.com
+
+# CDN/静态资源
+DOMAIN-SUFFIX,speed.cloudflare.com
+DOMAIN-SUFFIX,gstatic.com
+
+# 系统服务
+DOMAIN-SUFFIX,time.windows.com
+
+# 其他
+DOMAIN-SUFFIX,readoor.cn
+DOMAIN-SUFFIX,erk8.com
