@@ -333,8 +333,8 @@ dns:
 #      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
       - 'https://dns.google/dns-query'       # Google DoH - 备选
     "geosite:!cn":
-      - 1.1.1.1
-      - 8.8.8.8
+      - 'tls://dns.alidns.com'
+      - "tls://dot.pub"
   fallback:
     - 'https://cloudflare-dns.com/dns-query'   # Cloudflare DoH
 #      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
