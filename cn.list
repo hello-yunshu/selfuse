@@ -1,11 +1,11 @@
 # IP地址
 # DNS服务
-IP-CIDR,8.8.8.8/32
+# IP-CIDR,8.8.8.8/32
 # IP-CIDR,8.8.4.4/32
 IP-CIDR,1.1.1.1/32
 IP-CIDR,1.0.0.1/32
-IP-CIDR,208.67.222.222/32
-IP-CIDR,208.67.220.220/32
+# IP-CIDR,208.67.222.222/32
+# IP-CIDR,208.67.220.220/32
 
 # 域名
 # DNS服务
@@ -14,9 +14,9 @@ DOMAIN-SUFFIX,doh.pub
 DOMAIN-SUFFIX,dot.pub
 DOMAIN-SUFFIX,doh.360.cn
 DOMAIN-SUFFIX,dot.360.cn
-DOMAIN-SUFFIX,dns.google
-DOMAIN-SUFFIX,doh.opendns.com
-DOMAIN-SUFFIX,cloudflare-dns.com
+# DOMAIN-SUFFIX,dns.google
+# DOMAIN-SUFFIX,doh.opendns.com
+# DOMAIN-SUFFIX,cloudflare-dns.com
 
 # 远程控制
 DOMAIN-SUFFIX,teamviewer.com
