@@ -330,15 +330,15 @@ dns:
       - '127.0.0.1:953'  # 国内优先使用本地 DNS 解析
     "geosite:gfw":
       - 'https://cloudflare-dns.com/dns-query'   # Cloudflare DoH
-#      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
-      - 'https://dns.google/dns-query'       # Google DoH - 备选
+      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
+#      - 'https://dns.google/dns-query'       # Google DoH - 备选
     "geosite:!cn":
       - 'https://dns.alidns.com/dns-query'
       - 'https://doh.pub/dns-query'
   fallback:
     - 'https://cloudflare-dns.com/dns-query'   # Cloudflare DoH
-#      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
-    - 'https://dns.google/dns-query'       # Google DoH - 备选
+    - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
+#    - 'https://dns.google/dns-query'       # Google DoH - 备选
   fallback-filter:
     geoip: true
     geoip-code: CN
