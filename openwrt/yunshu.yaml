@@ -333,8 +333,8 @@ dns:
 #      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
       - 'https://dns.google/dns-query'       # Google DoH - 备选
     "geosite:!cn":
-      - 'tls://dns.alidns.com'
-      - 'tls://dot.pub'
+      - 'https://dns.alidns.com/dns-query'
+      - 'https://doh.pub/dns-query'
   fallback:
     - 'https://cloudflare-dns.com/dns-query'   # Cloudflare DoH
 #      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
@@ -511,12 +511,12 @@ rules:
   - IP-CIDR6,fe80::/10,DIRECT,no-resolve
 
   - RULE-SET,自用直连,DIRECT
+  - RULE-SET,自用海外DNS,海外dns
+  - RULE-SET,自用GFW,节点选择
   - GEOSITE,steam@cn,国内
   - GEOSITE,apple-cn,国内
   - GEOSITE,CN,国内
   - GEOIP,CN,国内
-  - RULE-SET,自用海外DNS,海外dns
-  - RULE-SET,自用GFW,节点选择
 # - GEOSITE,biliintl,哔哩东南亚
 # - GEOSITE,bilibili,哔哩哔哩
   - GEOSITE,category-ai-!cn,境外AI
