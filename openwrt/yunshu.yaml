@@ -334,7 +334,7 @@ dns:
       - 'https://dns.google/dns-query'       # Google DoH - 备选
     "geosite:!cn":
       - 'tls://dns.alidns.com'
-      - "tls://dot.pub"
+      - 'tls://dot.pub'
   fallback:
     - 'https://cloudflare-dns.com/dns-query'   # Cloudflare DoH
 #      - 'https://doh.opendns.com/dns-query'  # OpenDNS DoH - 有问题     
