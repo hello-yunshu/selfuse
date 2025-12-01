@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.28-251124
+# 版本 V1.29-251201
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -402,7 +402,7 @@ proxy-groups:
   - { name: 海外dns, 
       type: select,
       proxies:
-        [香港, 自建节点, 节点选择, 台湾, 日本, 新加坡, 全球自动选择, DIRECT],
+        [全球自动选择, 香港, 自建节点, 节点选择, 台湾, 日本, 新加坡, DIRECT],
     }
     # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
   # - { name: dns, 
