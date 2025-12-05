@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.29-251201
+# 版本 V1.29-251205
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -92,7 +92,7 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/订阅一.yaml
     # 自动更新订阅时间，单位为秒
-    # interval: 3600
+    # interval: 21600
     # 形式
     type: file
     path: "./proxy_provider/subconverter.yaml"
@@ -132,7 +132,7 @@ rule-providers:
     # path可为空(仅限clash.meta 1.15.0以上版本)
     path: ./rule_provider/AWAvenue-Ads.mrs
     url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash.mrs"
-    interval: 43200
+    interval: 86400
 
   heidai-Ads:
     type: http
@@ -140,7 +140,7 @@ rule-providers:
     format: mrs
     path: ./rule_provider/heidai-Ads.mrs
     url: "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.mrs"
-    interval: 43200
+    interval: 86400
 
   anti-ad:
     type: http
@@ -148,7 +148,7 @@ rule-providers:
     format: mrs
     url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-ad.github.io/refs/heads/master/docs/mihomo.mrs"
     path: ./rule_provider/anti-ad.mrs
-    interval: 43200
+    interval: 86400
 
   Cats-Team-adrules:
     type: http
@@ -156,7 +156,7 @@ rule-providers:
     format: mrs
     url: "https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules-mihomo.mrs"
     path: ./rule_provider/Cats-Team-adrules.mrs
-    interval: 43200
+    interval: 86400
 
   neodevhost-adrules:
     type: http
@@ -164,7 +164,7 @@ rule-providers:
     format: yaml
     url: "https://raw.githubusercontent.com/neodevpro/neodevhost/master/clash"
     path: ./rule_provider/neodevhost-adrules.yaml
-    interval: 43200
+    interval: 86400
     
   Loyalsoldier-Ads:
     type: http
@@ -224,7 +224,7 @@ rule-providers:
     path: "./rule_provider/cn-self.txt"
     format: text
     url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/cn.list
-    interval: 7200
+    interval: 43200
 
   自用GFW:
     type: http
@@ -232,7 +232,7 @@ rule-providers:
     path: "./rule_provider/GFW-self.txt"
     format: text
     url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/gfw.list
-    interval: 7200
+    interval: 43200
 
   自用海外DNS:
     type: http
@@ -240,7 +240,7 @@ rule-providers:
     path: "./rule_provider/overseas-dns-self.txt"
     format: text
     url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/overseas-dns.list
-    interval: 7200
+    interval: 86400
 
 mode: rule
 # ipv6 支持
