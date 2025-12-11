@@ -1,31 +1,96 @@
-# IP地址
-# DNS服务
-# IP-CIDR,8.8.8.8/32
-# IP-CIDR,8.8.4.4/32
-IP-CIDR,1.1.1.1/32
-IP-CIDR,1.0.0.1/32
-# IP-CIDR,208.67.222.222/32
-# IP-CIDR,208.67.220.220/32
-
-# 域名
-# DNS服务
+# =============== DNS 服务（国内优先）===============
+# 阿里 DNS
 DOMAIN-SUFFIX,dns.alidns.com
+
+# 腾讯 DNS
 DOMAIN-SUFFIX,doh.pub
 DOMAIN-SUFFIX,dot.pub
-DOMAIN-SUFFIX,doh.360.cn
-DOMAIN-SUFFIX,dot.360.cn
-# DOMAIN-SUFFIX,dns.google
-# DOMAIN-SUFFIX,doh.opendns.com
-# DOMAIN-SUFFIX,cloudflare-dns.com
+DOMAIN-SUFFIX,dns.pub
 
-# 时间同步
+# 360 DNS
+DOMAIN-SUFFIX,doh.360.cn
+DOMAIN-SUFFIX, dot.360.cn
+
+# 百度 DNS
+DOMAIN-SUFFIX,doh.baidu.com
+
+# 华为 & 公共 DNS IP（防部分设备硬编码）
+IP-CIDR,114.114.114.114/32
+IP-CIDR,114.114.115.115/32
+
+# 运营商公共 DNS（可选，提升兼容性）
+IP-CIDR,211.137.96.23/32    # 中国移动
+IP-CIDR,211.137.96.24/32
+IP-CIDR,221.6.4.66/32       # 中国联通
+IP-CIDR,221.6.4.67/32
+IP-CIDR,202.101.224.68/32   # 中国电信
+IP-CIDR,202.101.224.69/32
+
+# Cloudflare DNS（国际，按需保留）
+IP-CIDR,1.1.1.1/32
+IP-CIDR,1.0.0.1/32
+
+
+# =============== 时间同步（NTP）===============
 DOMAIN-SUFFIX,ntp.aliyun.com
 DOMAIN-SUFFIX,cn.ntp.org.cn
 DOMAIN-SUFFIX,ntp.ntsc.ac.cn
+DOMAIN-SUFFIX,time1.cloud.tencent.com
+DOMAIN-SUFFIX,time2.cloud.tencent.com
+DOMAIN-SUFFIX,ntp.tencent.com
 
-# CDN/静态资源
-DOMAIN-SUFFIX,speed.cloudflare.com
+# Apple
+DOMAIN-SUFFIX,time.apple.com
+DOMAIN-SUFFIX,time-ios.apple.com
+DOMAIN-SUFFIX,gsp1.apple.com
+
+# Microsoft
+DOMAIN-SUFFIX,time.windows.com
+DOMAIN-SUFFIX,time.microsoft.com
+
+# Google（谨慎，部分可代理）
+# DOMAIN-SUFFIX,time.google.com
+# DOMAIN-SUFFIX,android.clients.google.com
+
+
+# =============== 系统与网络诊断 ===============
+# Captive Portal & 网络检测（虽常用于 Fake-IP Filter，但直连也安全）
+DOMAIN-SUFFIX,captive.apple.com
+DOMAIN-SUFFIX,connectivitycheck.gstatic.com
+DOMAIN-SUFFIX,connectivitycheck.android.com
+DOMAIN-SUFFIX,network-test.debian.org
+DOMAIN-SUFFIX,detectportal.firefox.com
+DOMAIN-SUFFIX,msftconnecttest.com
+DOMAIN-SUFFIX,msftncsi.com
+
+# 测速服务（避免代理导致结果失真）
+DOMAIN-SUFFIX,speedtest.net
+DOMAIN-SUFFIX,www.speedtest.net
+DOMAIN-SUFFIX,ooklaserver.net
+DOMAIN-SUFFIX,fast.com
+DOMAIN-SUFFIX,api.fast.com
+
+
+# =============== 国内 CDN 与静态资源（确保直连加速）===============
+# DOMAIN-SUFFIX,alicdn.com
+# DOMAIN-SUFFIX,taobao.com
+# DOMAIN-SUFFIX,tmall.com
+# DOMAIN-SUFFIX,jd.com
+# DOMAIN-SUFFIX,bdstatic.com
+# DOMAIN-SUFFIX,bdimg.com
+# DOMAIN-SUFFIX,qhres.com
+# DOMAIN-SUFFIX,qhimg.com
+# DOMAIN-SUFFIX,gtimg.com
+# DOMAIN-SUFFIX,myqcloud.com
+# DOMAIN-SUFFIX,ksyun.com
+
+
+# =============== 其他关键服务 ===============
+# Microsoft 登录（避免 Office / Azure 登录异常）
+DOMAIN-SUFFIX,login.microsoftonline.com
+
+# 字体资源（观察使用情况，部分地区建议走代理）
 DOMAIN-SUFFIX,fonts.gstatic.com
 
-# 系统服务
-DOMAIN-SUFFIX,time.windows.com
+# Cloudflare 测速（通常可直连）
+DOMAIN-SUFFIX,speed.cloudflare.com
