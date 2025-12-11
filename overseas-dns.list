@@ -1,12 +1,39 @@
 # IP地址
 IP-CIDR,8.8.8.8/32
+# =============== Google Public DNS ===============
+IP-CIDR,8.8.8.8/32
 IP-CIDR,8.8.4.4/32
-# IP-CIDR,1.1.1.1/32
+DOMAIN-SUFFIX,dns.google
+DOMAIN-SUFFIX,dns.google.com
+
+# =============== Cloudflare DNS ===============
+# IP-CIDR,1.1.1.1/32        # 可选：若你希望走代理则取消注释
 # IP-CIDR,1.0.0.1/32
+DOMAIN-SUFFIX,cloudflare-dns.com
+DOMAIN-SUFFIX,one.one.one.one  # Cloudflare 的 DoT/DoH 主机名
+
+# =============== OpenDNS (Cisco) ===============
 IP-CIDR,208.67.222.222/32
 IP-CIDR,208.67.220.220/32
-
-# 域名
-DOMAIN-SUFFIX,dns.google
 DOMAIN-SUFFIX,doh.opendns.com
-DOMAIN-SUFFIX,cloudflare-dns.com
+DOMAIN-SUFFIX,opendns.com
+
+# =============== Quad9 (Privacy-focused) ===============
+IP-CIDR,9.9.9.9/32
+IP-CIDR,149.112.112.112/32
+DOMAIN-SUFFIX,dns.quad9.net
+DOMAIN-SUFFIX,quad9.net
+
+# =============== NextDNS (Customizable) ===============
+DOMAIN-SUFFIX,dns.nextdns.io
+DOMAIN-SUFFIX,nextdns.io
+
+# =============== AdGuard DNS ===============
+IP-CIDR,94.140.14.14/32
+IP-CIDR,94.140.15.15/32
+DOMAIN-SUFFIX,dns.adguard.com
+DOMAIN-SUFFIX,adguard-dns.com
+
+# =============== ControlD (Modern DoH) ===============
+DOMAIN-SUFFIX,controld.com
+DOMAIN-SUFFIX,dns.controld.com
