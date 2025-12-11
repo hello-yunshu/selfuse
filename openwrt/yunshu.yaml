@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.32-251211
+# 版本 V1.33-251211
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -323,11 +323,11 @@ tun:
 dns:
   enable: true
   listen: :1053
-  ipv6: false  # 关闭IPv6以减少解析时间，如需IPv6可开启
+  ipv6: true  # 关闭IPv6以减少解析时间，如需IPv6可开启
   enhanced-mode: fake-ip
   respect-rules: true
   fake-ip-persist: true
-  fake-ip-range: 28.0.0.1/8
+  fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - '*'
     - '+.lan'
