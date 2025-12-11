@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.34-251211
+# 版本 V1.35-251211
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -522,7 +522,7 @@ rules:
   - IP-CIDR6,fe80::/10,DIRECT,no-resolve
 
   # 自用白名单
-  - RULE-SET,自用白名单
+  - RULE-SET,自用白名单,DIRECT
   - RULE-SET,自用海外DNS,海外dns
 
   # 拦截规则
