@@ -1,34 +1,34 @@
 # IP地址
 # DNS服务
-# IP-CIDR,8.8.8.8/32,DIRECT
-# IP-CIDR,8.8.4.4/32,DIRECT
-IP-CIDR,1.1.1.1/32,DIRECT
-IP-CIDR,1.0.0.1/32,DIRECT
-# IP-CIDR,208.67.222.222/32,DIRECT
-# IP-CIDR,208.67.220.220/32,DIRECT
+# IP-CIDR,8.8.8.8/32
+# IP-CIDR,8.8.4.4/32
+IP-CIDR,1.1.1.1/32
+IP-CIDR,1.0.0.1/32
+# IP-CIDR,208.67.222.222/32
+# IP-CIDR,208.67.220.220/32
 
 # 域名
 # DNS服务
-DOMAIN-SUFFIX,dns.alidns.com,DIRECT
-DOMAIN-SUFFIX,doh.pub,DIRECT
-DOMAIN-SUFFIX,dot.pub,DIRECT
-DOMAIN-SUFFIX,doh.360.cn,DIRECT
-DOMAIN-SUFFIX,dot.360.cn,DIRECT
-# DOMAIN-SUFFIX,dns.google,DIRECT
-# DOMAIN-SUFFIX,doh.opendns.com,DIRECT
-# DOMAIN-SUFFIX,cloudflare-dns.com,DIRECT
+DOMAIN-SUFFIX,dns.alidns.com
+DOMAIN-SUFFIX,doh.pub
+DOMAIN-SUFFIX,dot.pub
+DOMAIN-SUFFIX,doh.360.cn
+DOMAIN-SUFFIX,dot.360.cn
+# DOMAIN-SUFFIX,dns.google
+# DOMAIN-SUFFIX,doh.opendns.com
+# DOMAIN-SUFFIX,cloudflare-dns.com
 
 # 时间同步
-DOMAIN-SUFFIX,ntp.aliyun.com,DIRECT
-DOMAIN-SUFFIX,cn.ntp.org.cn,DIRECT
-DOMAIN-SUFFIX,ntp.ntsc.ac.cn,DIRECT
+DOMAIN-SUFFIX,ntp.aliyun.com
+DOMAIN-SUFFIX,cn.ntp.org.cn
+DOMAIN-SUFFIX,ntp.ntsc.ac.cn
 
 # CDN/静态资源
-DOMAIN-SUFFIX,speed.cloudflare.com,DIRECT
-DOMAIN-SUFFIX,fonts.gstatic.com,DIRECT
+DOMAIN-SUFFIX,speed.cloudflare.com
+DOMAIN-SUFFIX,fonts.gstatic.com
 
 # 系统服务
-DOMAIN-SUFFIX,time.windows.com,DIRECT
+DOMAIN-SUFFIX,time.windows.com
 
 # 小米
-DOMAIN-SUFFIX,idm.iot.mi.com,DIRECT
+DOMAIN-SUFFIX,idm.iot.mi.com
