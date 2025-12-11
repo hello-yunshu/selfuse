@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.33-251211
+# 版本 V1.34-251211
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -217,6 +217,14 @@ rule-providers:
   #   interval: 43200
   #   url: https://ruleset.skk.moe/Clash/ip/reject.txt
   #   path: ./rule_provider/reject_ip.txt
+
+  自用白名单:
+    type: http
+    behavior: classical
+    path: "./rule_provider/whitelist-self.txt"
+    format: text
+    url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/white.list
+    interval: 43200
 
   自用直连:
     type: http
@@ -501,7 +509,23 @@ rules:
   # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
 # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT
 # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
-  
+
+  # 绕过局域网地址
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,::1/128,DIRECT,no-resolve
+  - IP-CIDR6,fc00::/7,DIRECT,no-resolve
+  - IP-CIDR6,fe80::/10,DIRECT,no-resolve
+
+  # 自用白名单
+  - RULE-SET,自用白名单
+  - RULE-SET,自用海外DNS,海外dns
+
+  # 拦截规则
 #  - RULE-SET,AWAvenue-Ads,广告拦截
   - RULE-SET,heidai-Ads,广告拦截
   - RULE-SET,anti-ad,广告拦截
@@ -516,19 +540,8 @@ rules:
   # - RULE-SET,reject_non_ip_no_drop,广告拦截
   # - RULE-SET,reject_ip,广告拦截
 
-  # 绕过局域网地址
-  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
-  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
-  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
-  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
-  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
-  - IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
-  - IP-CIDR,::1/128,DIRECT,no-resolve
-  - IP-CIDR6,fc00::/7,DIRECT,no-resolve
-  - IP-CIDR6,fe80::/10,DIRECT,no-resolve
-
+  # 节点选择
   - RULE-SET,自用直连,DIRECT
-  - RULE-SET,自用海外DNS,海外dns
   - RULE-SET,自用GFW,节点选择
   - GEOSITE,steam@cn,国内
   - GEOSITE,apple-cn,国内
