@@ -29,6 +29,3 @@ DOMAIN-SUFFIX,fonts.gstatic.com
 
 # 系统服务
 DOMAIN-SUFFIX,time.windows.com
-
-# 小米
-DOMAIN-SUFFIX,idm.iot.mi.com
