@@ -7,10 +7,10 @@ DOMAIN-SUFFIX,dns.google
 DOMAIN-SUFFIX,dns.google.com
 
 # =============== Cloudflare DNS ===============
-# IP-CIDR,1.1.1.1/32        # 可选：若你希望走代理则取消注释
+# IP-CIDR,1.1.1.1/32
 # IP-CIDR,1.0.0.1/32
 DOMAIN-SUFFIX,cloudflare-dns.com
-DOMAIN-SUFFIX,one.one.one.one  # Cloudflare 的 DoT/DoH 主机名
+DOMAIN-SUFFIX,one.one.one.one
 
 # =============== OpenDNS (Cisco) ===============
 IP-CIDR,208.67.222.222/32
