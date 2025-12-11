@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.35-251211
+# 版本 V1.36-251212
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -218,12 +218,12 @@ rule-providers:
   #   url: https://ruleset.skk.moe/Clash/ip/reject.txt
   #   path: ./rule_provider/reject_ip.txt
 
-  自用白名单:
+  自用直连白名单:
     type: http
     behavior: classical
-    path: "./rule_provider/whitelist-self.txt"
+    path: "./rule_provider/whitelist-cn-self.txt"
     format: text
-    url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/white.list
+    url: https://raw.githubusercontent.com/hello-yunshu/selfuse/refs/heads/master/white-cn.list
     interval: 43200
 
   自用直连:
@@ -522,7 +522,7 @@ rules:
   - IP-CIDR6,fe80::/10,DIRECT,no-resolve
 
   # 自用白名单
-  - RULE-SET,自用白名单,DIRECT
+  - RULE-SET,自用直连白名单,DIRECT
   - RULE-SET,自用海外DNS,海外dns
 
   # 拦截规则
