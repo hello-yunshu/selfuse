@@ -58,3 +58,6 @@ DOMAIN-SUFFIX,time.windows.com
 # 其他
 DOMAIN-SUFFIX,readoor.cn
 DOMAIN-SUFFIX,erk8.com
+
+# 小米
+DOMAIN-SUFFIX,idm.iot.mi.com
