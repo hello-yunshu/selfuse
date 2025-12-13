@@ -94,3 +94,6 @@ DOMAIN-SUFFIX,fonts.gstatic.com
 
 # Cloudflare 测速（通常可直连）
 DOMAIN-SUFFIX,speed.cloudflare.com
+
+# 芙崽
+DOMAIN-SUFFIX,robopoet.com
