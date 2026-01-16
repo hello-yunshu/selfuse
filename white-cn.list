@@ -90,7 +90,7 @@ DOMAIN-SUFFIX,api.fast.com
 DOMAIN-SUFFIX,login.microsoftonline.com
 
 # 字体资源（观察使用情况，部分地区建议走代理）
-DOMAIN-SUFFIX,fonts.gstatic.com
+# DOMAIN-SUFFIX,fonts.gstatic.com
 
 # Cloudflare 测速（通常可直连）
 DOMAIN-SUFFIX,speed.cloudflare.com
