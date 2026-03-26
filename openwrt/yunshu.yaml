@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.37-260315
+# 版本 V1.40-260326
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -31,6 +31,24 @@ pr:
         其它地区,
         全部节点,
         DIRECT,
+      ],
+  }
+prd:
+  &prd {
+    type: select,
+    proxies:
+      [
+        DIRECT,
+        节点选择,
+        自建节点,
+        香港,
+        台湾,
+        日本,
+        新加坡,
+        美国,
+        全球自动选择,
+        其它地区,
+        全部节点,
       ],
   }
 # 延迟检测 URL
@@ -428,7 +446,7 @@ proxy-groups:
   
   - { name: 境外AI, type: select, proxies: [AI, 日本, 新加坡, 美国, 低倍率, 自建节点]  }
   # Apple 推荐走全局直连
-  - { name: Apple, <<: *pr }
+  - { name: Apple, <<: *prd }
   - { name: Google, <<: *pr }
   - { name: Telegram, <<: *pr }
   - { name: Twitter, <<: *pr }
@@ -445,27 +463,10 @@ proxy-groups:
   - { name: Spotify, <<: *pr }
   - { name: Github, <<: *pr }
   - { name: Steam, <<: *pr }
-  - { name: OneDrive, <<: *pr }
-  - { name: 微软服务, <<: *pr }
+  - { name: OneDrive, <<: *prd }
+  - { name: 微软服务, <<: *prd }
   - { name: GFW域名, <<: *pr }
-  - {
-      name: 国内,
-      type: select,
-      proxies:
-        [
-          DIRECT,
-          节点选择,
-          自建节点,
-          香港,
-          台湾,
-          日本,
-          新加坡,
-          美国,
-          全球自动选择,
-          其它地区,
-          全部节点,
-        ],
-    }
+  - { name: 国内, <<: *prd }
   # 其他就是所有规则没匹配到的
   # 可以理解为 ACL4SSR 配置里的 漏网之鱼
   # 换言之，其他走代理就是绕过中国大陆地址，不走就是 GFWList 模式
