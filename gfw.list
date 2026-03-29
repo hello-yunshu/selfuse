@@ -54,6 +54,9 @@ DOMAIN-SUFFIX,yxwwyx.co
 DOMAIN-SUFFIX,yxwwyx.com
 DOMAIN-SUFFIX,gstatic.com
 DOMAIN-SUFFIX,clashverge.dev
+DOMAIN-SUFFIX,pythonhosted.org
+DOMAIN-SUFFIX,pypi.org
+DOMAIN-SUFFIX,pypi.python.org
 
 # emby
 DOMAIN-SUFFIX,docker.xiaoya.pro
