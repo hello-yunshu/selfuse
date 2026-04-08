@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.40-260326
+# 版本 V1.51-260408
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -101,6 +101,20 @@ use-url: &use-url
   use:
     - 订阅
     # - 本地节点
+
+use-url-all: &use-url-all
+  # 如果不希望自动切换请将下面两行注释对调
+  type: url-test
+  #type: url-test
+  # 以下是自建节点
+  # proxies:
+  #   - 自建Reality节点
+  url: "https://cp.cloudflare.com/generate_204"
+  interval: 100
+  tolerance: 2
+  use:
+    - 本地节点
+    - 订阅
 
 # 订阅链接
 # 对于订阅来说，path 为选填项，但建议启用
@@ -498,7 +512,7 @@ proxy-groups:
   - { name: 日本, <<: *use-url, filter: '(?i)(日本|jp|japan)(?!.*ipv6.*)' }
   - { name: 美国, <<: *use, filter: '(?i)(美|us|unitedstates|united states)(?!.*ipv6.*)' }
   - { name: 新加坡, <<: *use-url, filter: '(?i)(新|sg|singapore)(?!.*ipv6.*)' }
-  - { name: 全球自动选择, <<: *use-url, filter: '^(?i)(?!.*ipv6)' }
+  - { name: 全球自动选择, <<: *use-url-all, filter: '^(?i)(?!.*ipv6)' }
   - {
       name: 其它地区,
       <<: *use,
