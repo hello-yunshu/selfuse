@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.51-260408
+# 版本 V1.52-260409
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -506,12 +506,12 @@ proxy-groups:
 
   # 分隔,下面是地区分组
   - { name: AI, <<: *use-url, filter: '(?i)(ai|人工智能)(?!.*ipv6.*)' }
-  - { name: 低倍率, <<: *use, filter: '(?i)^(?!.*(?:港|hk|hongkong|hong kong|台|tw|taiwan))(?=.*0\.\d+x).*' }
-  - { name: 香港, <<: *use-url, filter: '(?i)(港|hk|hongkong|hong kong)(?!.*ipv6.*)' }
-  - { name: 台湾, <<: *use-url, filter: '(?i)(台|tw|taiwan)(?!.*ipv6.*)' }
-  - { name: 日本, <<: *use-url, filter: '(?i)(日本|jp|japan)(?!.*ipv6.*)' }
-  - { name: 美国, <<: *use, filter: '(?i)(美|us|unitedstates|united states)(?!.*ipv6.*)' }
-  - { name: 新加坡, <<: *use-url, filter: '(?i)(新|sg|singapore)(?!.*ipv6.*)' }
+  - { name: 低倍率, <<: *use, filter: '(?i)^(?!.*(?:港|🇭🇰|hk|hongkong|hong kong|台|🇹🇼|tw|taiwan))(?=.*0\.\d+x).*' }
+  - { name: 香港, <<: *use-url, filter: '(?i)(港|🇭🇰|hk|hongkong|hong kong)(?!.*ipv6.*)' }
+  - { name: 台湾, <<: *use-url, filter: '(?i)(台|🇹🇼|tw|taiwan)(?!.*ipv6.*)' }
+  - { name: 日本, <<: *use-url, filter: '(?i)(日本|🇯🇵|jp|japan)(?!.*ipv6.*)' }
+  - { name: 美国, <<: *use, filter: '(?i)(美|🇺🇸|us|unitedstates|united states)(?!.*ipv6.*)' }
+  - { name: 新加坡, <<: *use-url, filter: '(?i)(新|🇸🇬|sg|singapore)(?!.*ipv6.*)' }
   - { name: 全球自动选择, <<: *use-url-all, filter: '^(?i)(?!.*ipv6)' }
   - {
       name: 其它地区,
