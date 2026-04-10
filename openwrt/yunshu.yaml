@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.52-260409
+# 版本 V1.53-260410
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -87,6 +87,17 @@ use: &use
   use:
     - 订阅
     # - 本地节点
+
+use-all: &use-all
+  # 如果不希望自动切换请将下面两行注释对调
+  type: select
+  #type: url-test
+  # 以下是自建节点
+  # proxies:
+  #   - 自建Reality节点
+  use:
+    - 本地节点
+    - 订阅
 
 use-url: &use-url
   # 如果不希望自动切换请将下面两行注释对调
@@ -518,7 +529,7 @@ proxy-groups:
       <<: *use,
       filter: '(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates|ipv6)).*',
     }
-  - { name: 全部节点, <<: *use }
+  - { name: 全部节点, <<: *use-all }
 
 rules:
   # 若需禁用 QUIC 请取消注释 QUIC 两条规则
