@@ -89,6 +89,9 @@ DOMAIN-SUFFIX,api.fast.com
 # Microsoft 登录（避免 Office / Azure 登录异常）
 DOMAIN-SUFFIX,login.microsoftonline.com
 
+# Microsoft Bing Rewards（避免被广告规则误拦截）
+DOMAIN-SUFFIX,rewards.bing.com
+
 # 字体资源（观察使用情况，部分地区建议走代理）
 # DOMAIN-SUFFIX,fonts.gstatic.com
 
