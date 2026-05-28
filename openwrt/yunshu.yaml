@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.54-260529
+# 版本 V1.55-260529
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -599,7 +599,7 @@ rules:
   - GEOIP,telegram,Telegram
   - GEOIP,twitter,Twitter
   - GEOIP,facebook,节点选择
-  - GEOIP,cloudflare,Cloudflare
+#  - GEOIP,cloudflare,Cloudflare
   - GEOSITE,gfw,GFW域名
   - GEOSITE,geolocation-!cn,其他
 
