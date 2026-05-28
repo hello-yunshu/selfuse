@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.53-260410
+# 版本 V1.54-260529
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -491,6 +491,7 @@ proxy-groups:
   - { name: OneDrive, <<: *prd }
   - { name: 微软服务, <<: *prd }
   - { name: GFW域名, <<: *pr }
+  - { name: Cloudflare, <<: *prd }
   - { name: 国内, <<: *prd }
   # 其他就是所有规则没匹配到的
   # 可以理解为 ACL4SSR 配置里的 漏网之鱼
@@ -598,6 +599,7 @@ rules:
   - GEOIP,telegram,Telegram
   - GEOIP,twitter,Twitter
   - GEOIP,facebook,节点选择
+  - GEOIP,cloudflare,Cloudflare
   - GEOSITE,gfw,GFW域名
   - GEOSITE,geolocation-!cn,其他
 
