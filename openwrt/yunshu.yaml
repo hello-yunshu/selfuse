@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.56-26052902
+# 版本 V1.6-26071201
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -402,6 +402,7 @@ tun:
     - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  disable-icmp-forwarding: true
 
 # dns 设置
 # 已配置 ipv6
@@ -515,7 +516,7 @@ proxy-groups:
 
   - { name: 广告拦截, type: select, proxies: [REJECT, REJECT-DROP, DIRECT, 节点选择] }
   
-  - { name: 境外AI, type: select, proxies: [AI, 日本, 新加坡, 美国, 低倍率, 自建节点]  }
+  - { name: 境外AI, type: select, proxies: [节点选择, AI, 自建节点, 日本, 新加坡, 美国, 低倍率]  }
   # Apple 推荐走全局直连
   - { name: Apple, <<: *prd }
   - { name: Google, <<: *pr }
