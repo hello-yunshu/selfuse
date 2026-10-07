@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.6.2-26092101
+# 版本 V1.6.3-26100701
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -59,7 +59,7 @@ p: &p
     # 节点连通性检测时间，单位为秒
     interval: 300
     # 节点超时延迟，单位为毫秒
-    timeout: 1000
+    timeout: 5000
     # 节点自动切换差值，单位为毫秒
     tolerance: 100
 
@@ -138,7 +138,7 @@ use-url-smart: &use-url-smart
   interval: 300
   tolerance: 20
   lazy: true
-  timeout: 3000
+  timeout: 5000
   max-failed-times: 3
   use:
     - 订阅
@@ -155,7 +155,7 @@ use-url-all-smart: &use-url-all-smart
   interval: 300
   tolerance: 20
   lazy: true
-  timeout: 3000
+  timeout: 5000
   max-failed-times: 3
   use:
     - 本地节点
@@ -564,7 +564,7 @@ proxy-groups:
     }
 
   # 分隔,下面是地区分组
-  - { name: 自用cf负载均衡, type: load-balance, strategy: consistent-hashing, use: [本地节点], filter: '\[CF-', url: "https://cp.cloudflare.com/generate_204", interval: 300, lazy: true, timeout: 3000, max-failed-times: 3 }
+  - { name: 自用cf负载均衡, type: load-balance, strategy: consistent-hashing, use: [本地节点], filter: '\[CF-', url: "https://cp.cloudflare.com/generate_204", interval: 300, lazy: true, timeout: 5000, max-failed-times: 3 }
   - { name: AI, <<: *use-url-smart, filter: '(?i)(ai|人工智能)(?!.*ipv6.*)' }
   - { name: 低倍率, <<: *use, filter: '(?i)^(?!.*(?:港|🇭🇰|hk|hongkong|hong kong|台|🇹🇼|tw|taiwan))(?=.*0\.\d+x).*' }
   - { name: 香港, <<: *use-url-smart, filter: '(?i)(港|🇭🇰|hk|hongkong|hong kong)(?!.*ipv6.*)' }
