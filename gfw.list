@@ -74,6 +74,7 @@ DOMAIN-SUFFIX,groq.com
 DOMAIN-SUFFIX,cursor.com
 DOMAIN-SUFFIX,flowith.io
 DOMAIN-SUFFIX,opencode.ai
+DOMAIN-SUFFIX,ollama.com
 
 # cdn
 DOMAIN-SUFFIX,cdn.ghostery.com
