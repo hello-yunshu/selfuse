@@ -19,11 +19,12 @@ DOMAIN-SUFFIX,se8.us
 # 代码
 DOMAIN-SUFFIX,docker.com
 DOMAIN-SUFFIX,docker.io
-DOMAIN-SUFFIX,github.com
-DOMAIN-SUFFIX,github.global.ssl.fastly.net
-DOMAIN-SUFFIX,assets-cdn.github.com
+# 以下 github.com 本体及其子域、静态资源域已移除：
+# 规则顺序中 RULE-SET,自用GFW 优先级最高，若留在此处会遮蔽 GEOSITE,github,Github 策略组。
+# 移除后由 GEOSITE,github 接管并落入 Github 策略组。
+# 保留 github.io（GitHub Pages 站点）与 githubusercontent.com（raw/avatars/objects 内容域），
+# 二者不是 github.com 本体，保持原有路由以免影响已有站点访问。
 DOMAIN-SUFFIX,github.io
-DOMAIN-SUFFIX,github.githubassets.com
 DOMAIN-SUFFIX,githubusercontent.com
 DOMAIN-SUFFIX,gitlab.com
 DOMAIN-SUFFIX,gitlab.io
