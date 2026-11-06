@@ -46,7 +46,8 @@ DOMAIN-SUFFIX,gvt2.com
 # 工具
 DOMAIN-SUFFIX,archive.org
 DOMAIN-SUFFIX,agemys.org
-DOMAIN-SUFFIX,cloud.google.com
+# cloud.google.com 已移除：google.com 属于 GEOSITE,google，原条目遮蔽 Google 策略组。
+# Google 组当前指向「节点选择」，移除后出口链路不变。
 DOMAIN-SUFFIX,hellosimply.com
 DOMAIN-SUFFIX,bitcomet.com
 DOMAIN-SUFFIX,websim.com
