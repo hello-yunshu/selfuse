@@ -6,12 +6,12 @@ IP-CIDR,5.28.195.0/24
 # general
 DOMAIN-SUFFIX,openwrt.org
 DOMAIN-SUFFIX,idrlabs.com
-DOMAIN-SUFFIX,pixiv.net
-DOMAIN-SUFFIX,pixiv.org
 DOMAIN-SUFFIX,pinterest.com
 DOMAIN-SUFFIX,picrew.me
-DOMAIN-SUFFIX,exhentai.org
-DOMAIN-SUFFIX,e-hentai.org
+# 以下 pixiv / e-hentai 条目已移除：
+# RULE-SET,自用GFW 优先级最高，留在此处会遮蔽后方 GEOSITE,pixiv（Pixiv 策略组）
+# 与 GEOSITE,ehentai（ehentai 策略组）。移除后由 GeoSite 接管，
+# 两个策略组当前均指向「节点选择」，实际出口链路不变。
 DOMAIN-SUFFIX,boylove.cc
 DOMAIN-SUFFIX,hentaifox.com
 DOMAIN-SUFFIX,se8.us
@@ -19,11 +19,12 @@ DOMAIN-SUFFIX,se8.us
 # 代码
 DOMAIN-SUFFIX,docker.com
 DOMAIN-SUFFIX,docker.io
-DOMAIN-SUFFIX,github.com
-DOMAIN-SUFFIX,github.global.ssl.fastly.net
-DOMAIN-SUFFIX,assets-cdn.github.com
+# 以下 github.com 本体及其子域、静态资源域已移除：
+# 规则顺序中 RULE-SET,自用GFW 优先级最高，若留在此处会遮蔽 GEOSITE,github,Github 策略组。
+# 移除后由 GEOSITE,github 接管并落入 Github 策略组。
+# 保留 github.io（GitHub Pages 站点）与 githubusercontent.com（raw/avatars/objects 内容域），
+# 二者不是 github.com 本体，保持原有路由以免影响已有站点访问。
 DOMAIN-SUFFIX,github.io
-DOMAIN-SUFFIX,github.githubassets.com
 DOMAIN-SUFFIX,githubusercontent.com
 DOMAIN-SUFFIX,gitlab.com
 DOMAIN-SUFFIX,gitlab.io
@@ -31,7 +32,7 @@ DOMAIN-SUFFIX,gitlabusercontent.com
 DOMAIN-SUFFIX,gitlabusercontent.io
 
 # 社交媒体
-DOMAIN-SUFFIX,t.me
+# t.me 已移除：原先遮蔽 GEOSITE,telegram（Telegram 策略组），移除后由 GeoSite 接管，当前出口链路不变。
 DOMAIN-SUFFIX,whatsapp.net
 DOMAIN-SUFFIX,whatsapp.com
 
@@ -45,7 +46,8 @@ DOMAIN-SUFFIX,gvt2.com
 # 工具
 DOMAIN-SUFFIX,archive.org
 DOMAIN-SUFFIX,agemys.org
-DOMAIN-SUFFIX,cloud.google.com
+# cloud.google.com 已移除：google.com 属于 GEOSITE,google，原条目遮蔽 Google 策略组。
+# Google 组当前指向「节点选择」，移除后出口链路不变。
 DOMAIN-SUFFIX,hellosimply.com
 DOMAIN-SUFFIX,bitcomet.com
 DOMAIN-SUFFIX,websim.com
