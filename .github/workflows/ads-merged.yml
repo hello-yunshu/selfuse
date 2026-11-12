@@ -9,11 +9,6 @@ on:
     # UTC 19:17 = 北京时间 03:17
     - cron: '17 19 * * *'
   workflow_dispatch:
-    inputs:
-      warmup:
-        description: "规则无变化时也强制预热一次 hey.run 缓存"
-        type: boolean
-        default: false
 
 permissions:
   contents: write
@@ -134,7 +129,7 @@ jobs:
       # 新资产发布后 Cloudflare 侧是 MISS，mihomo 冷拉 5.15 MB 超过其 20s 超时就会 503。
       # 先在 CI 里把对象灌进边缘缓存，设备端首拉就只剩传输时间。
       - name: 预热 hey.run 缓存
-        if: steps.diff.outputs.changed == 'true' || inputs.warmup == true
+        if: steps.diff.outputs.changed == 'true'
         run: |
           set -euo pipefail
           asset_url="https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs"
@@ -152,22 +147,16 @@ jobs:
           curl -sIL --max-time 20 "$asset_url" | grep -iE '^(HTTP/|content-length:)' | tail -3
 
           echo "== 2. 预热（必须是完整 GET：HEAD 不进 Worker 缓存）=="
-          warm_status=$(curl -sS -o /tmp/warm.body -D /tmp/warm.hdr --max-time 180 \
-            -w '%{http_code}' "$proxy_url")
-          cat /tmp/warm.hdr
-          echo "warm: http=$warm_status bytes=$(wc -c < /tmp/warm.body)"
-          if [ "$warm_status" != "200" ]; then
-            echo "---- 预热响应正文（前 400 字节）----"
-            head -c 400 /tmp/warm.body
-            echo
-          fi
+          curl -sS -o /dev/null --max-time 180 \
+            -w 'warm: http=%{http_code} bytes=%{size_download} time=%{time_total}s speed=%{speed_download}B/s\n' \
+            "$proxy_url"
 
           echo "== 3. 校验命中（同样用 GET，因为 Worker 只对 GET 查缓存）=="
           for attempt in 1 2 3; do
-            # -D- 打印响应头，-o 丢弃正文（成功时是 5 MB 的 mrs）
-            curl -sS -o /dev/null -D /tmp/check.hdr --max-time 120 "$proxy_url"
-            grep -iE '^(HTTP/|x-proxy-cache:|cf-ray:|age:|cache-control:)' /tmp/check.hdr
-            if grep -qi '^x-proxy-cache: *HIT' /tmp/check.hdr; then
+            # -D- 打印响应头，-o /dev/null 丢弃 5 MB 正文
+            headers="$(curl -sS -o /dev/null -D- --max-time 120 "$proxy_url")"
+            echo "$headers" | grep -iE '^(HTTP/|x-proxy-cache:|cf-ray:|age:|cache-control:)'
+            if echo "$headers" | grep -qi '^x-proxy-cache: *HIT'; then
               echo "预热成功（第 ${attempt} 次校验命中）"
               exit 0
             fi
