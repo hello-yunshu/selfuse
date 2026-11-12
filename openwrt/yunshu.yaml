@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.6.5-26111202
+# 版本 V1.6.6-26111203
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -210,7 +210,7 @@ rule-providers:
     behavior: domain
     format: mrs
     path: ./rule_provider/ads-merged.mrs
-    url: "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs"
+    url: "https://github.hey.run/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs"
     interval: 86400
 
   # reject_non_ip_no_drop:

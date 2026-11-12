@@ -100,3 +100,21 @@ DOMAIN-SUFFIX,speed.cloudflare.com
 
 # 芙崽
 DOMAIN-SUFFIX,robopoet.com
+
+
+# =============== 推送通道（2026-11-12 放行）===============
+# 极光推送 / 个推是 App 消息推送的基础设施（长连接 + 上报），
+# 但上游广告规则集把厂商根域整体归入 "tracking / statistics" 收录
+# （hagezi pro、oisd big、anti-AD、blackmatrix7 等），导致部分 App 收不到推送。
+# 此处按"功能必需"放行根域，与上游的归类判定并不冲突。
+# 极光推送（JPush / 极光统计 JAnalytics）
+DOMAIN-SUFFIX,jpush.cn
+DOMAIN-SUFFIX,jpush.io
+DOMAIN-SUFFIX,jpushoa.com
+DOMAIN-SUFFIX,jiguang.cn
+
+# 个推（Getui / 个信 igexin）
+DOMAIN-SUFFIX,getui.com
+DOMAIN-SUFFIX,getui.cn
+DOMAIN-SUFFIX,getui.net
+DOMAIN-SUFFIX,igexin.com
