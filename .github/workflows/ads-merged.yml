@@ -121,3 +121,46 @@ jobs:
           fi
           git commit -m "chore(rules): rebuild ads-merged mrs $(jq -r .version rules/manifest.json)"
           git push
+
+      # 预热放在最后：即使失败也不影响已发布的资产与清单（GitHub 无法回滚发布，
+      # 失败只标红，由下一次定时任务或人工重跑补上）。
+      #
+      # 为什么需要：hey.run 的缓存是按 URL 精确命中的（见 Worker 的 canCache），
+      # 新资产发布后 Cloudflare 侧是 MISS，mihomo 冷拉 5.15 MB 超过其 20s 超时就会 503。
+      # 先在 CI 里把对象灌进边缘缓存，设备端首拉就只剩传输时间。
+      - name: 预热 hey.run 缓存
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          asset_url="https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs"
+          proxy_url="https://github.hey.run/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs"
+
+          echo "== 1. 轮询 GitHub 资产可下载（上限 150s）=="
+          deadline=$((SECONDS + 150))
+          until curl -sfIL --max-time 20 -o /dev/null "$asset_url"; do
+            if [ "$SECONDS" -ge "$deadline" ]; then
+              echo "::error::GitHub 资产在 150s 内仍不可下载"
+              exit 1
+            fi
+            sleep 5
+          done
+          curl -sIL --max-time 20 "$asset_url" | grep -iE '^(HTTP/|content-length:)' | tail -3
+
+          echo "== 2. 预热（必须是完整 GET：HEAD 不进 Worker 缓存）=="
+          curl -sS -o /dev/null --max-time 180 \
+            -w 'warm: http=%{http_code} bytes=%{size_download} time=%{time_total}s speed=%{speed_download}B/s\n' \
+            "$proxy_url"
+
+          echo "== 3. 校验命中（同样用 GET，因为 Worker 只对 GET 查缓存）=="
+          for attempt in 1 2 3; do
+            # -D- 打印响应头，-o /dev/null 丢弃 5 MB 正文
+            headers="$(curl -sS -o /dev/null -D- --max-time 120 "$proxy_url")"
+            echo "$headers" | grep -iE '^(HTTP/|x-proxy-cache:|cf-ray:|age:|cache-control:)'
+            if echo "$headers" | grep -qi '^x-proxy-cache: *HIT'; then
+              echo "预热成功（第 ${attempt} 次校验命中）"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::预热后 x-proxy-cache 仍非 HIT，边缘缓存未生效"
+          exit 1
