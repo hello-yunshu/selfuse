@@ -1,0 +1,30 @@
+{
+  "version": "ads-merged-26111201",
+  "entries": 304619,
+  "bytes": 2786465,
+  "sha256": "7480a4d1d52596056d303196ce49092076cf0676aa465573d76088ed5a2bb68b",
+  "generated_at": "2026-11-12T10:25:01Z",
+  "asset_url": "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs",
+  "sources": [
+    {
+      "name": "heidai",
+      "url": "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.mrs"
+    },
+    {
+      "name": "anti-ad",
+      "url": "https://raw.githubusercontent.com/privacy-protection-tools/anti-ad.github.io/master/docs/mihomo.mrs"
+    },
+    {
+      "name": "cats-team",
+      "url": "https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules-mihomo.mrs"
+    },
+    {
+      "name": "loyalsoldier",
+      "url": "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
+    },
+    {
+      "name": "neodevhost",
+      "url": "https://raw.githubusercontent.com/neodevpro/neodevhost/master/clash"
+    }
+  ]
+}
