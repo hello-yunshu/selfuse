@@ -2,13 +2,18 @@
 #
 # 生成 dist/ads-merged.mrs
 #
-# 把 5 个广告拦截集合求并集，转成 mihomo 的 mrs 二进制格式，供
+# 把多个广告/追踪域名集合求并集，转成 mihomo 的 mrs 二进制格式，供
 # openwrt/yunshu.yaml 里的 rule-provider `ads-merged` 使用。
 #
 # 为什么要有这个脚本：
-#   上游 5 个源里有 2 个是 yaml（Loyalsoldier / neodevhost），mihomo 解析
-#   yaml 集合时瞬时内存占用是 mrs 的数十倍；而 5 个集合互相重叠 68%。
-#   合并成一个 mrs 后条目从 956308 降到约 304517，覆盖范围不变。
+#   上游里有 yaml/hosts 纯文本源，mihomo 直接加载时瞬时内存占用是 mrs 的
+#   数十倍；且各集合互相大量重叠。合并成一个 mrs 后内存与解析开销都最小。
+#
+# 收录标准（改动前先按这三条核）：
+#   1. 最近 6 个月有更新；2. 与并集重叠低于 95%；3. 不能命中国内 CDN/登录/IP
+#   关键域名（alicdn、gtimg、qpic、myqcloud、weixin、alipay 等）。
+#   已否决：AdAway（2026-04 后停更）、StevenBlack（在其余并集之上增量为 0）、
+#   1Hosts（2026-09 后未更新，且大量 DGA 垃圾域名）。
 #
 # 用法：
 #   MIHOMO=/path/to/mihomo ./scripts/build-ads-merged.sh
@@ -42,11 +47,15 @@ SRC=(
   "cats-team|mrs|https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules-mihomo.mrs|https://cdn.jsdelivr.net/gh/Cats-Team/AdRules@main/adrules-mihomo.mrs"
   "loyalsoldier|yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt|https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
   "neodevhost|yaml|https://raw.githubusercontent.com/neodevpro/neodevhost/master/clash|https://cdn.jsdelivr.net/gh/neodevpro/neodevhost@master/clash"
+  "hagezi|text|https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt|https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@main/wildcard/pro.txt"
+  "oisd|text|https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild_big.txt|https://cdn.jsdelivr.net/gh/sjhgvr/oisd@main/domainswild_big.txt"
+  "bm7|text|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Domain.yaml|https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Domain.yaml"
 )
 
 fetch() {
-  # $1 主地址  $2 备用地址  $3 落地文件
+  # $1 主地址  $2 备用地址（可为空）  $3 落地文件
   curl -fsSL --retry 3 --retry-all-errors --retry-delay 5 -m 240 -o "$3" "$1" && return 0
+  [ -n "$2" ] || return 1
   echo "  主源失败，改用备用源" >&2
   curl -fsSL --retry 3 --retry-all-errors --retry-delay 5 -m 240 -o "$3" "$2"
 }
@@ -67,13 +76,14 @@ for s in "${SRC[@]}"; do
       exit 1
     fi
   else
-    # yaml 源：本身就是 payload 列表，直接交给 python 归一化
+    # yaml / hosts / 纯域名等文本源，直接交给 python 归一化
     cp "$WORK/$name.raw" "$WORK/$name.list"
   fi
 done
 
 python3 - "$WORK" > "$WORK/merged.yaml" <<'PY'
 import os
+import re
 import sys
 
 work = sys.argv[1]
@@ -85,24 +95,29 @@ FLOOR = {
     "cats-team": 130000,
     "loyalsoldier": 120000,
     "neodevhost": 120000,
+    "hagezi": 150000,
+    "oisd": 150000,
+    "bm7": 200000,
 }
-TOTAL_MIN, TOTAL_MAX = 250000, 400000
+TOTAL_MIN, TOTAL_MAX = 450000, 900000
+
+IPLIKE = re.compile(r"^[\d.]+$")
 
 
 def norm(line):
     t = line.strip()
     if not t or t.startswith("#") or t.startswith("payload"):
         return None
+    if t.startswith("||"):
+        t = t[2:]
+        if "^" in t:
+            t = t.split("^")[0]
     if t.startswith("- "):
         t = t[2:].strip()
     elif t == "-":
         return None
     if len(t) >= 2 and t[0] == t[-1] and t[0] in "'\"":
         t = t[1:-1].strip()
-    if t.startswith("||"):
-        t = t[2:]
-    if t.endswith("^"):
-        t = t[:-1]
     while True:
         if t.startswith("+.") or t.startswith("*."):
             t = t[2:]
@@ -112,6 +127,9 @@ def norm(line):
             break
     t = t.strip().strip("'\"").lower().rstrip(".")
     if not t or " " in t or "/" in t or "." not in t:
+        return None
+    # 过滤 IP 和内嵌主机头，这些不是域名
+    if IPLIKE.match(t):
         return None
     return t
 
@@ -193,7 +211,7 @@ PY
 )"
 echo "集合校验通过：$N 条完全一致"
 
-mv "$WORK/ads-merged.mrs" "$OUT"
+cp "$WORK/ads-merged.mrs" "$OUT"
 
 if command -v sha256sum >/dev/null 2>&1; then
   SHA="$(sha256sum "$OUT" | awk '{print $1}')"

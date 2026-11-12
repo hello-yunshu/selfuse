@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.6.4-26111201
+# 版本 V1.6.5-26111202
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -200,9 +200,10 @@ proxy-providers:
 # 规则订阅
 rule-providers:
   # 广告拦截合并集
-  # 由 5 个上游求并集后转 mrs，每日由 .github/workflows/ads-merged.yml 自动构建发布
+  # 由 8 个上游求并集后转 mrs，每日由 .github/workflows/ads-merged.yml 自动构建发布
   # 上游：217heidai/adblockfilters、privacy-protection-tools/anti-ad、Cats-Team/AdRules、
-  #       Loyalsoldier/clash-rules(reject)、neodevpro/neodevhost
+  #       Loyalsoldier/clash-rules(reject)、neodevpro/neodevhost、
+  #       hagezi/dns-blocklists(pro)、sjhgvr/oisd(big)、blackmatrix7/ios_rule_script(Advertising)
   # 产物地址固定，随上游更新覆盖同一 release 资产
   ads-merged:
     type: http
