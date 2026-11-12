@@ -1,6 +1,6 @@
 name: Build ads-merged mrs
 
-# 把 5 个上游广告规则集合并成一个 mrs，发布到 rules-latest 这个固定 release。
+# 把 8 个上游广告规则集合并成一个 mrs，发布到 rules-latest 这个固定 release。
 # OpenClash 侧通过固定 URL 拉取，见 openwrt/yunshu.yaml 的 rule-provider `ads-merged`。
 #
 # 上游基本都是 24h 更新一次，这里每天跑一次；也可以手动触发。
@@ -66,7 +66,7 @@ jobs:
           else
             gh release create rules-latest dist/ads-merged.mrs \
               --title "广告拦截合并集（ads-merged.mrs）" \
-              --notes "5 个上游广告规则集的并集，behavior=domain，mrs 格式，每日自动重建。"
+              --notes "8 个上游广告规则集的并集，behavior=domain，mrs 格式，每日自动重建。"
           fi
 
       - name: 更新清单并提交
