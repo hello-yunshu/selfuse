@@ -1,0 +1,123 @@
+name: Build ads-merged mrs
+
+# 把 5 个上游广告规则集合并成一个 mrs，发布到 rules-latest 这个固定 release。
+# OpenClash 侧通过固定 URL 拉取，见 openwrt/yunshu.yaml 的 rule-provider `ads-merged`。
+#
+# 上游基本都是 24h 更新一次，这里每天跑一次；也可以手动触发。
+on:
+  schedule:
+    # UTC 19:17 = 北京时间 03:17
+    - cron: '17 19 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ads-merged
+  cancel-in-progress: false
+
+env:
+  MIHOMO_VERSION: v1.19.34
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 mihomo
+        run: |
+          set -euo pipefail
+          url="https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
+          curl -fsSL --retry 3 --retry-all-errors -o mihomo.gz "$url"
+          gunzip -f mihomo.gz
+          chmod +x mihomo
+          ./mihomo -v
+
+      - name: 构建（下载 / 合并 / 转 mrs / 自校验）
+        env:
+          MIHOMO: ./mihomo
+        run: bash scripts/build-ads-merged.sh
+
+      - name: 与已发布版本比对
+        id: diff
+        run: |
+          set -euo pipefail
+          new_sha="$(jq -r .sha256 dist/build.json)"
+          old_sha="$(jq -r '.sha256 // empty' rules/manifest.json 2>/dev/null || true)"
+          echo "新产物 sha256: $new_sha"
+          echo "已发布 sha256: ${old_sha:-（无，首次发布）}"
+          if [ -n "$old_sha" ] && [ "$old_sha" = "$new_sha" ]; then
+            echo "内容无变化，跳过发布"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 发布 release 资产
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if gh release view rules-latest >/dev/null 2>&1; then
+            gh release upload rules-latest dist/ads-merged.mrs --clobber
+          else
+            gh release create rules-latest dist/ads-merged.mrs \
+              --title "广告拦截合并集（ads-merged.mrs）" \
+              --notes "5 个上游广告规则集的并集，behavior=domain，mrs 格式，每日自动重建。"
+          fi
+
+      - name: 更新清单并提交
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          mkdir -p rules
+          python3 - <<'PY'
+          import datetime
+          import json
+          import pathlib
+
+          build = json.loads(pathlib.Path("dist/build.json").read_text())
+          manifest_path = pathlib.Path("rules/manifest.json")
+
+          # 版本号格式沿用仓库既有的日期戳约定：<YYMMDD><NN>，同一天多次发布则 NN 递增
+          today = datetime.datetime.now(datetime.timezone.utc).strftime("%y%m%d")
+          nn = 1
+          if manifest_path.exists():
+              try:
+                  old = json.loads(manifest_path.read_text())
+                  old_ver = old.get("version", "")
+                  # ads-merged-26111201 -> 26111201
+                  stamp = old_ver.rsplit("-", 1)[-1]
+                  if len(stamp) == 8:
+                      old_day, old_nn = stamp[:6], int(stamp[6:])
+                      if old_day == today:
+                          nn = old_nn + 1
+              except Exception:
+                  pass
+
+          version = "ads-merged-%s%02d" % (today, nn)
+          manifest = {
+              "version": version,
+              "entries": build["entries"],
+              "bytes": build["bytes"],
+              "sha256": build["sha256"],
+              "generated_at": build["generated_at"],
+              "asset_url": "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs",
+              "sources": build.get("sources", []),
+          }
+          manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+          print("manifest ->", version, manifest["entries"], "entries")
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rules/manifest.json
+          if git diff --cached --quiet; then
+            echo "清单无变化，不提交"
+            exit 0
+          fi
+          git commit -m "chore(rules): rebuild ads-merged mrs $(jq -r .version rules/manifest.json)"
+          git push
