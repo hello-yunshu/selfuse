@@ -1,9 +1,9 @@
 {
-  "version": "ads-merged-26111201",
-  "entries": 304619,
-  "bytes": 2786465,
-  "sha256": "7480a4d1d52596056d303196ce49092076cf0676aa465573d76088ed5a2bb68b",
-  "generated_at": "2026-11-12T10:25:01Z",
+  "version": "ads-merged-26111202",
+  "entries": 599368,
+  "bytes": 5149663,
+  "sha256": "059dcbcb06ef78ffd9ffb0fba32df7e28752242d3d234413f2061247e1adfb6c",
+  "generated_at": "2026-11-12T12:21:35Z",
   "asset_url": "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs",
   "sources": [
     {
@@ -25,6 +25,18 @@
     {
       "name": "neodevhost",
       "url": "https://raw.githubusercontent.com/neodevpro/neodevhost/master/clash"
+    },
+    {
+      "name": "hagezi",
+      "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt"
+    },
+    {
+      "name": "oisd",
+      "url": "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild_big.txt"
+    },
+    {
+      "name": "bm7",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Domain.yaml"
     }
   ]
 }
