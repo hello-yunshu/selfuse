@@ -1,5 +1,5 @@
 #  mihomo (Clash Meta) 云舒配置
-# 版本 V1.6.3-26100701
+# 版本 V1.6.4-26111201
 # https://hey.run
 # 来源：
 # https://gist.github.com/liuran001/5ca84f7def53c70b554d3f765ff86a33
@@ -199,56 +199,17 @@ proxy-providers:
 
 # 规则订阅
 rule-providers:
-  # 秋风广告拦截规则
-  # https://awavenue.top
-  # 由于 Anti-AD 误杀率高，本项目已在 1.11-241024 版本更换秋风广告规则
-  AWAvenue-Ads:
+  # 广告拦截合并集
+  # 由 5 个上游求并集后转 mrs，每日由 .github/workflows/ads-merged.yml 自动构建发布
+  # 上游：217heidai/adblockfilters、privacy-protection-tools/anti-ad、Cats-Team/AdRules、
+  #       Loyalsoldier/clash-rules(reject)、neodevpro/neodevhost
+  # 产物地址固定，随上游更新覆盖同一 release 资产
+  ads-merged:
     type: http
     behavior: domain
     format: mrs
-    # path可为空(仅限clash.meta 1.15.0以上版本)
-    path: ./rule_provider/AWAvenue-Ads.mrs
-    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash.mrs"
-    interval: 86400
-
-  heidai-Ads:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rule_provider/heidai-Ads.mrs
-    url: "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.mrs"
-    interval: 86400
-
-  anti-ad:
-    type: http
-    behavior: domain
-    format: mrs
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-ad.github.io/refs/heads/master/docs/mihomo.mrs"
-    path: ./rule_provider/anti-ad.mrs
-    interval: 86400
-
-  Cats-Team-adrules:
-    type: http
-    behavior: domain
-    format: mrs
-    url: "https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules-mihomo.mrs"
-    path: ./rule_provider/Cats-Team-adrules.mrs
-    interval: 86400
-
-  neodevhost-adrules:
-    type: http
-    behavior: domain
-    format: yaml
-    url: "https://raw.githubusercontent.com/neodevpro/neodevhost/master/clash"
-    path: ./rule_provider/neodevhost-adrules.yaml
-    interval: 86400
-    
-  Loyalsoldier-Ads:
-    type: http
-    behavior: domain
-    format: yaml
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
-    path: ./rule_provider/Loyalsoldier-Ads.yaml
+    path: ./rule_provider/ads-merged.mrs
+    url: "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs"
     interval: 86400
 
   # reject_non_ip_no_drop:
@@ -602,12 +563,7 @@ rules:
   - RULE-SET,自用海外DNS,海外dns
 
   # 拦截规则
-#  - RULE-SET,AWAvenue-Ads,广告拦截
-  - RULE-SET,heidai-Ads,广告拦截
-  - RULE-SET,anti-ad,广告拦截
-  - RULE-SET,Cats-Team-adrules,广告拦截
-  - RULE-SET,neodevhost-adrules,广告拦截
-  - RULE-SET,Loyalsoldier-Ads,广告拦截
+  - RULE-SET,ads-merged,广告拦截
   - GEOSITE,category-ads-all,广告拦截
   # - RULE-SET,reject_non_ip,广告拦截
   # - RULE-SET,reject_domainset,广告拦截
