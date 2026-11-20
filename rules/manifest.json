@@ -1,9 +1,9 @@
 {
-  "version": "ads-merged-26111901",
-  "entries": 605777,
-  "bytes": 5232264,
-  "sha256": "666dc037cc07305da48a6a11fa5d0ffff08c8609cb2ed71790a9b8e3eee7d9d7",
-  "generated_at": "2026-11-19T01:11:50Z",
+  "version": "ads-merged-26112001",
+  "entries": 609927,
+  "bytes": 5263544,
+  "sha256": "b8dc71b8c1ff46957790b6c34ff0b8d9d80bed35cad3bd131a68aeedfbbc9100",
+  "generated_at": "2026-11-20T01:15:40Z",
   "asset_url": "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs",
   "sources": [
     {
