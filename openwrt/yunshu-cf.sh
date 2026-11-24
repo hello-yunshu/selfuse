@@ -3,6 +3,13 @@
 LOG_FILE="/yunshu/shell/cloudflare/script.log"
 MAX_LOG_SIZE=500000  # 最大日志文件大小（字节）
 
+# HAProxy 统计页地址与凭据。凭据放本机配置文件，不要提交到仓库：
+#   /etc/yunshu-cf.env:
+#   CF_STATS_AUTH="$(printf '%s:%s' '用户名' '口令' | base64 | tr -d '\n')"
+CF_STATS_URL="http://192.168.2.1:1188/;csv;norefresh"
+CF_STATS_AUTH=""
+[[ -f /etc/yunshu-cf.env ]] && . /etc/yunshu-cf.env
+
 log() {
     if [[ -f "$LOG_FILE" ]]; then
         log_size=$(stat -c%s "$LOG_FILE")
@@ -112,11 +119,14 @@ find_ip() {
 
 check_running() {
     log "Starting check_running function"
+    [[ -z "$CF_STATS_AUTH" ]] && log "CF_STATS_AUTH not configured; HAProxy stats request will be unauthenticated"
     scur=1
     snum=0
     while (( scur > 3 )); do
         sleep 10
-        scur=$(curl -s 'http://192.168.2.1:1188/;csv;norefresh' -H 'Authorization: Basic eXVuc2h1OkxvdWlzb3dlbjk2MDIyMC4=' | grep "FRONTEND" | grep -v "console" | awk -F ',' '{print $5}' | awk '{sum+=$1} END {print sum}')
+        curl_args=(-s "$CF_STATS_URL")
+        [[ -n "$CF_STATS_AUTH" ]] && curl_args+=(-H "Authorization: Basic $CF_STATS_AUTH")
+        scur=$(curl "${curl_args[@]}" | grep "FRONTEND" | grep -v "console" | awk -F ',' '{print $5}' | awk '{sum+=$1} END {print sum}')
         if [[ ${snum} -lt 30 ]]; then
             snum=$((snum + 1))
         else
