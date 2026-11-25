@@ -20,7 +20,10 @@
 #   OUT=/tmp/x.mrs MIHOMO=... ./scripts/build-ads-merged.sh
 #
 # 依赖：curl、python3、mihomo（需支持 convert-ruleset 子命令）
-# 输出：dist/ads-merged.mrs 和 dist/build.json
+# 输出：dist/ads-merged.mrs、dist/ads-merged.txt 和 dist/build.json
+#
+# ads-merged.txt 是同一份并集集合的裸域名版本（每行一个域名），供 mosdns
+# 的 adblock_set 直接加载。两份产物共用同一集合，杜绝 mrs / txt 漂移。
 #
 # 失败即退出，不会产出残缺文件：任何上游下载失败、格式变化、条目数
 # 低于健康下限，脚本都以非 0 退出，CI 因此不会发布新版本。
@@ -29,6 +32,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="${OUT:-$ROOT/dist/ads-merged.mrs}"
+TXT_OUT="${TXT_OUT:-$(dirname "$OUT")/ads-merged.txt}"
 META="${META:-$ROOT/dist/build.json}"
 MIHOMO="${MIHOMO:-mihomo}"
 WORK="$(mktemp -d)"
@@ -81,12 +85,12 @@ for s in "${SRC[@]}"; do
   fi
 done
 
-python3 - "$WORK" > "$WORK/merged.yaml" <<'PY'
+python3 - "$WORK" "$WORK/merged.yaml" "$WORK/ads-merged.txt" <<'PY'
 import os
 import re
 import sys
 
-work = sys.argv[1]
+work, yaml_path, txt_path = sys.argv[1:4]
 
 # 健康下限：低于它就说明上游改格式或返回了空壳，直接失败
 FLOOR = {
@@ -155,9 +159,20 @@ if not (TOTAL_MIN <= n <= TOTAL_MAX):
     sys.stderr.write("并集 %d 条超出合理区间 [%d, %d]，拒绝产出\n" % (n, TOTAL_MIN, TOTAL_MAX))
     sys.exit(1)
 
-sys.stdout.write("payload:\n")
-for d in sorted(domains):
-    sys.stdout.write("  - '+.%s'\n" % d)
+with open(yaml_path, "w") as f:
+    f.write("payload:\n")
+    for d in sorted(domains):
+        f.write("  - '+.%s'\n" % d)
+
+# mosdns 文本版：与 mrs 来自同一份 domains 集合，每行一个裸域名。
+# 头部注释便于追溯版本与来源；mosdns 的 adblock_set 会跳过 # 开头行。
+with open(txt_path, "w") as f:
+    f.write("#TITLE=ads-merged\n")
+    f.write("#VER=%s\n" % os.environ.get("RULE_VER", os.environ.get("GITHUB_RUN_NUMBER", "local")))
+    f.write("#URL=https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.txt\n")
+    f.write("#TOTAL_LINES=%d\n" % len(domains))
+    for d in sorted(domains):
+        f.write(d + "\n")
 PY
 
 mkdir -p "$(dirname "$OUT")"
@@ -211,14 +226,44 @@ PY
 )"
 echo "集合校验通过：$N 条完全一致"
 
+# txt 校验：裸域名集合必须与 mrs 源集合逐条一致
+python3 - "$WORK/merged.yaml" "$WORK/ads-merged.txt" <<'PY'
+import sys
+
+src = set()
+with open(sys.argv[1], "r", errors="replace") as f:
+    for line in f:
+        t = line.strip()
+        if t.startswith("- '"):
+            src.add(t[3:-1].removeprefix("+."))
+
+txt = set()
+with open(sys.argv[2], "r", errors="replace") as f:
+    for line in f:
+        t = line.strip()
+        if t and not t.startswith("#"):
+            txt.add(t)
+
+if src != txt:
+    sys.stderr.write("校验失败：txt 与 mrs 源集合不一致（txt 少 %d 条，多 %d 条）\n"
+                     % (len(src - txt), len(txt - src)))
+    sys.exit(1)
+sys.stderr.write("txt 校验通过：%d 条完全一致\n" % len(src))
+PY
+
 cp "$WORK/ads-merged.mrs" "$OUT"
+cp "$WORK/ads-merged.txt" "$TXT_OUT"
 
 if command -v sha256sum >/dev/null 2>&1; then
   SHA="$(sha256sum "$OUT" | awk '{print $1}')"
+  TXT_SHA="$(sha256sum "$TXT_OUT" | awk '{print $1}')"
 else
   SHA="$(shasum -a 256 "$OUT" | awk '{print $1}')"
+  TXT_SHA="$(shasum -a 256 "$TXT_OUT" | awk '{print $1}')"
 fi
 BYTES="$(wc -c < "$OUT" | tr -d ' ')"
+TXT_BYTES="$(wc -c < "$TXT_OUT" | tr -d ' ')"
+TXT_LINES="$(awk '!/^#/{n++} END{print n+0}' "$TXT_OUT")"
 mkdir -p "$(dirname "$META")"
 
 # 把来源清单一起写进 build.json，供 manifest 追溯
@@ -235,9 +280,13 @@ cat > "$META" <<EOF
   "entries": $N,
   "bytes": $BYTES,
   "sha256": "$SHA",
+  "txt_entries": $TXT_LINES,
+  "txt_bytes": $TXT_BYTES,
+  "txt_sha256": "$TXT_SHA",
   "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "sources": $sources_json
 }
 EOF
 
 printf '完成 %s（%s 字节，%s 条，sha256 %s）\n' "$OUT" "$BYTES" "$N" "$SHA"
+printf '完成 %s（%s 字节，%s 条，sha256 %s）\n' "$TXT_OUT" "$TXT_BYTES" "$TXT_LINES" "$TXT_SHA"

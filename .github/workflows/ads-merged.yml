@@ -1,7 +1,8 @@
-name: Build ads-merged mrs
+name: Build ads-merged rules
 
-# 把 8 个上游广告规则集合并成一个 mrs，发布到 rules-latest 这个固定 release。
-# OpenClash 侧通过固定 URL 拉取，见 openwrt/yunshu.yaml 的 rule-provider `ads-merged`。
+# 把 8 个上游广告规则集合并成一个 mrs + 一份裸域名 txt，发布到 rules-latest 这个固定 release。
+# OpenClash 侧通过固定 URL 拉取 mrs，见 openwrt/yunshu.yaml 的 rule-provider `ads-merged`。
+# mosdns 侧拉取 txt，见 OpenWrt 上 /etc/config/mosdns 的 ad_source。
 #
 # 上游基本都是 24h 更新一次，这里每天跑一次；也可以手动触发。
 on:
@@ -46,10 +47,13 @@ jobs:
           set -euo pipefail
           new_sha="$(jq -r .sha256 dist/build.json)"
           old_sha="$(jq -r '.sha256 // empty' rules/manifest.json 2>/dev/null || true)"
-          echo "新产物 sha256: $new_sha"
-          echo "已发布 sha256: ${old_sha:-（无，首次发布）}"
-          if [ -n "$old_sha" ] && [ "$old_sha" = "$new_sha" ]; then
-            echo "内容无变化，跳过发布"
+          new_txt_sha="$(jq -r '.txt_sha256 // empty' dist/build.json)"
+          old_txt_sha="$(jq -r '.txt_sha256 // empty' rules/manifest.json 2>/dev/null || true)"
+          echo "新产物 sha256: $new_sha / txt: $new_txt_sha"
+          echo "已发布 sha256: ${old_sha:-（无）} / txt: ${old_txt_sha:-（无）}"
+          # 两个产物任一变化都需要重新发布；旧 manifest 没有 txt_sha256 时也要补发 txt
+          if [ -n "$old_sha" ] && [ "$old_sha" = "$new_sha" ] && [ "$old_txt_sha" = "$new_txt_sha" ]; then
+            echo "两个产物均无变化，跳过发布"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -62,11 +66,11 @@ jobs:
         run: |
           set -euo pipefail
           if gh release view rules-latest >/dev/null 2>&1; then
-            gh release upload rules-latest dist/ads-merged.mrs --clobber
+            gh release upload rules-latest dist/ads-merged.mrs dist/ads-merged.txt --clobber
           else
-            gh release create rules-latest dist/ads-merged.mrs \
-              --title "广告拦截合并集（ads-merged.mrs）" \
-              --notes "8 个上游广告规则集的并集，behavior=domain，mrs 格式，每日自动重建。"
+            gh release create rules-latest dist/ads-merged.mrs dist/ads-merged.txt \
+              --title "广告拦截合并集（ads-merged.mrs / ads-merged.txt）" \
+              --notes "8 个上游广告规则集的并集。mrs 供 OpenClash(mihomo) rule-provider，txt 是同集合的裸域名版，供 mosdns adblock_set。每日自动重建。"
           fi
 
       - name: 更新清单并提交
@@ -104,8 +108,12 @@ jobs:
               "entries": build["entries"],
               "bytes": build["bytes"],
               "sha256": build["sha256"],
+              "txt_entries": build.get("txt_entries"),
+              "txt_bytes": build.get("txt_bytes"),
+              "txt_sha256": build.get("txt_sha256"),
               "generated_at": build["generated_at"],
               "asset_url": "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.mrs",
+              "txt_asset_url": "https://github.com/hello-yunshu/selfuse/releases/download/rules-latest/ads-merged.txt",
               "sources": build.get("sources", []),
           }
           manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
