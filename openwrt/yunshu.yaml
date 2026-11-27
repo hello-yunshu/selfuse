@@ -408,15 +408,12 @@ dns:
     "geosite:cn,private,apple,microsoft":
       - '127.0.0.1:953'
     "geosite:gfw":
-      - 'https://cloudflare-dns.com/dns-query'
-      - 'https://dns.google/dns-query'
+      - 'https://doh.hey.run/dns-query'
     "geosite:!cn":
-      - 'https://cloudflare-dns.com/dns-query'
-      - 'https://dns.google/dns-query'
+      - 'https://doh.hey.run/dns-query'
 
   fallback:
-    - 'https://cloudflare-dns.com/dns-query'
-    - 'https://dns.google/dns-query'
+    - 'https://doh.hey.run/dns-query'
 
   fallback-filter:
     geoip: true
